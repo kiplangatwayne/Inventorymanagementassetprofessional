@@ -8,7 +8,6 @@
 }
 
 header {
-  background-color: #007bff;
   color: #fff;
   padding: 20px;
 }
@@ -56,12 +55,14 @@ header .first-heading {
   font-family: Courgette;
   font-size: 60px;
   font-size: 60px;
+  color: white;
   line-height: 1.1;
 }
 
 header .second-heading {
   font-family: Poppins;
   text-transform: uppercase;
+  color: white;
   letter-spacing: 5px;
 }
 
