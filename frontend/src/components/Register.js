@@ -79,9 +79,9 @@ function Register() {
               value={formData.role}
               onChange={handleChange}
             >
-              <option value="Employee">Employee</option>
-            <option value="Procurement Manager">Procurement Manager</option>
-            <option value="Admin">Admin</option>
+              <option value="">Select Role</option>
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
             </select>
           </div>
           {error && <p className="error">{error}</p>}
