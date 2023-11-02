@@ -42,19 +42,16 @@ function HomePage() {
     <div className="homepage">
       <nav>
         <div className="nav-content">
-          <Link to="/" className="nav-logo">
-            AMI
-          </Link>
-          <Breadcrumbs aria-label="breadcrumb">
-            <StyledBreadcrumb component={Link} to="/login" label="Login" />
-          </Breadcrumbs>
-          <Breadcrumbs aria-label="breadcrumb">
-            <StyledBreadcrumb component={Link} to="/AllocateAsset" label="AllocateAsset" />
-          </Breadcrumbs>
-          
-          <Breadcrumbs aria-label="breadcrumb">
-            <StyledBreadcrumb component={Link} to="/register" label="Register" />
-          </Breadcrumbs>
+          <div>
+            <Link to="/" className="nav-logo">
+              AMI
+            </Link>
+          </div>
+          <div>
+            <Breadcrumbs aria-label="breadcrumb">
+              <StyledBreadcrumb component={Link} to="/login" label="Login" />
+            </Breadcrumbs>
+          </div>
         </div>
       </nav>
       <header className="hero-section">

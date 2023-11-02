@@ -7,11 +7,6 @@
   padding: 20px;
 }
 
-header {
-  color: #fff;
-  padding: 20px;
-}
-
 /* Nav section */
 nav {
   background-color: #333;
@@ -23,6 +18,8 @@ nav {
 .nav-content {
   display: flex;
   justify-content: space-between;
+  margin-top: 250px;
+  color: white;
 }
 
 .nav-logo {
@@ -49,6 +46,7 @@ header {
   height: 85vh;
   background-image: url(../images/Cargo-image3.png);
   color: white;
+  margin-top: -70px;
 }
 
 header .first-heading {
@@ -171,4 +169,3 @@ footer {
     margin-right: 15px;
   }
 }
-  
