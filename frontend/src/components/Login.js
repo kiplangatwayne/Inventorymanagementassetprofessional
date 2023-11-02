@@ -54,19 +54,19 @@ function Login() {
       <h1>Login</h1>
       <form onSubmit={handleLogin}>
         <div className="form-group">
+          <label htmlFor="username">Username</label>
           <input
             type="text"
             name="username"
             value={formData.username}
-            placeholder='Username'
             onChange={handleInputChange}
           />
         </div>
         <div className="form-group">
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             name="password"
-            placeholder='Password'
             value={formData.password}
             onChange={handleInputChange}
           />
