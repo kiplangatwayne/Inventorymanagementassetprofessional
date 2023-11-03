@@ -16,6 +16,7 @@ import Login from './Login';
 import Register from './Register';
 import AllocateAsset from './AllocateAsset';
 import './css/HomePage.css';
+import UserProfile from './UserProfile';
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
@@ -55,6 +56,9 @@ function HomePage() {
           <Breadcrumbs aria-label="breadcrumb">
             <StyledBreadcrumb component={Link} to="/register" label="Register" />
           </Breadcrumbs>
+          <Breadcrumbs aria-label="breadcrumb">
+            <StyledBreadcrumb component={Link} to="/UserProfile" label="UserProfile" />
+          </Breadcrumbs>
         </div>
       </nav>
       <header className="hero-section">
@@ -62,6 +66,10 @@ function HomePage() {
         <h1 className="second-heading">Asset Management System</h1>
         <p>Efficiently Track and Manage Your Organization's Assets</p>
       </header>
+      <Link to="/dashboard">Normal Employee</Link>
+      
+
+
       <main className="main">
         <section className="project-description">
           <div className="adding-request">
@@ -77,8 +85,8 @@ function HomePage() {
             <p>Our System also allows addition of users to the system and removal of users to the system</p>
           </div>
         </section>
-        <section className="">
-
+        <section className="asset-request-section">
+        
         </section>
         <section className="contact-section">
           <div className="contact-info">
@@ -104,3 +112,6 @@ function HomePage() {
 }
 
 export default HomePage;
+
+
+
