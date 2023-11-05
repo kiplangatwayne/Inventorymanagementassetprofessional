@@ -180,3 +180,126 @@ footer {
   }
 }
 
+/* Register.css */
+.container {
+  width: 300px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+div {
+  margin: 10px 0;
+}
+
+label {
+  font-weight: bold;
+}
+
+input {
+  padding: 5px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+}
+
+/* Reset some default styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Global styles */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    display: fixed;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Login form styles */
+  form {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 40px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  .my-form{
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    width: 400px;
+    margin: auto;
+    align-items: center;
+    height: 100vh;
+  }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0074E1;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  button:hover {
+    background-color: #0059b3;
+  }
+  
+  /* Toast styles */
+  .Toastify__toast-container {
+    top: 20px;
+    right: 20px;
+  }
+  
+  /* Responsive styles (adjust as needed) */
+  @media (max-width: 768px) {
+    form {
+      width: 80%;
+    }
+  }

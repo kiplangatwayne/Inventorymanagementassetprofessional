@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './css/Login.css'
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -32,14 +33,14 @@ function Login() {
       if (response.status === 200) {
         const result = await response.json();
         localStorage.setItem('access_token', result.access_token);
-        toast.success('Login successful'); // Show success notification
+        toast.success('Login successful'); 
         navigate('/');
       } else {
-        toast.error('Invalid username or password'); // Show error notification
+        toast.error('Invalid username or password');
       }
     } catch (error) {
       console.error('Error logging in:', error);
-      toast.error('An error occurred during login'); // Show error notification
+      toast.error('An error occurred during login'); 
     }
   };
 
@@ -49,9 +50,9 @@ function Login() {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className='my-form'>
       <form onSubmit={handleLogin}>
+      <h1>Login</h1>
         <input
           type="text"
           name="username"
@@ -68,7 +69,7 @@ function Login() {
         />
         <button type="submit">Login</button>
       </form>
-      <ToastContainer /> {/* This component renders the notifications */}
+      <ToastContainer />
     </div>
   );
 }

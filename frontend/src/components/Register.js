@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Register() {
   const navigate = useNavigate();
@@ -29,7 +31,11 @@ function Register() {
       });
 
       if (response.ok) {
-        navigate('/success'); // Redirect to a success page
+        // Show success notification
+        toast.success('Registered successfully');
+
+        // Redirect to the login page
+        navigate('/login');
       } else {
         const data = await response.json();
         setError(data.message); // Display registration error
@@ -40,41 +46,41 @@ function Register() {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
+    <div className='my-form'>
       <form onSubmit={handleSubmit}>
+        <h2>Register</h2>
         <div>
-          <label>Username:</label>
           <input
             type="text"
             name="username"
+            placeholder='Username'
             value={formData.username}
             onChange={handleChange}
           />
         </div>
         <div>
-          <label>Email:</label>
           <input
             type="email"
             name="email"
+            placeholder='Email'
             value={formData.email}
             onChange={handleChange}
           />
         </div>
         <div>
-          <label>Password:</label>
           <input
             type="password"
             name="password"
+            placeholder='Password'
             value={formData.password}
             onChange={handleChange}
           />
         </div>
         <div>
-          <label>Role:</label>
           <input
             type="text"
             name="role"
+            placeholder='Role'
             value={formData.role}
             onChange={handleChange}
           />
@@ -82,6 +88,7 @@ function Register() {
         {error && <p className="error-message">{error}</p>}
         <button type="submit">Register</button>
       </form>
+      <ToastContainer /> {/* This component renders the notifications */}
     </div>
   );
 }

@@ -1,0 +1,68 @@
+/* Reset some default styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  .my-form{
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    width: 400px;
+    margin: auto;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Login form styles */
+  form {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #0074E1;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  button:hover {
+    background-color: #0059b3;
+  }
+  
+  /* Toast styles */
+  .Toastify__toast-container {
+    top: 20px;
+    right: 20px;
+  }
+  
+  /* Responsive styles (adjust as needed) */
+  @media (max-width: 768px) {
+    form {
+      width: 80%;
+    }
+  }

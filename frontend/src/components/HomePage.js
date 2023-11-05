@@ -11,12 +11,8 @@ import { mdiFacebook } from '@mdi/js';
 import { mdiPinterest } from '@mdi/js';
 import { mdiLinkedin } from '@mdi/js';
 import { mdiGooglePlus } from '@mdi/js';
-// import Login from './Login';
-import Login from './Login';
-import Register from './Register';
-import AllocateAsset from './AllocateAsset';
+
 import './css/HomePage.css';
-import UserProfile from './UserProfile';
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
   const backgroundColor =
@@ -49,12 +45,20 @@ function HomePage() {
           <Breadcrumbs aria-label="breadcrumb">
             <StyledBreadcrumb component={Link} to="/login" label="Login" />
           </Breadcrumbs>
-          <Breadcrumbs aria-label="breadcrumb">
-            <StyledBreadcrumb component={Link} to="/AllocateAsset" label="AllocateAsset" />
-          </Breadcrumbs>
           
           <Breadcrumbs aria-label="breadcrumb">
             <StyledBreadcrumb component={Link} to="/register" label="Register" />
+          </Breadcrumbs>
+          <Breadcrumbs aria-label="breadcrumb">
+            <StyledBreadcrumb component={Link} to="/admin" label="AdminDashboard" />
+          </Breadcrumbs>
+
+          <Breadcrumbs aria-label="breadcrumb">
+            <StyledBreadcrumb component={Link} to="/procurement" label="ProcurementDashboard" />
+          </Breadcrumbs>
+
+          <Breadcrumbs aria-label="breadcrumb">
+            <StyledBreadcrumb component={Link} to="/normalemployee" label="NormalEmployeeDashboard" />
           </Breadcrumbs>
           <Breadcrumbs aria-label="breadcrumb">
             <StyledBreadcrumb component={Link} to="/UserProfile" label="UserProfile" />
