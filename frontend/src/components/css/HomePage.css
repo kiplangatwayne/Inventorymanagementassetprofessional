@@ -7,7 +7,19 @@
   padding: 20px;
 }
 
+header {
+  color: #fff;
+  padding: 20px;
+}
+
 /* Nav section */
+nav {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  align-items: center;
+}
+
 nav {
   background-color: #333;
   color: #fff;
@@ -18,8 +30,7 @@ nav {
 .nav-content {
   display: flex;
   justify-content: space-between;
-  margin-top: 250px;
-  color: white;
+  
 }
 
 .nav-logo {
@@ -28,6 +39,11 @@ nav {
   font-size: 24px;
   text-decoration: none;
   color: #fff;
+}
+
+.breadcrumb-section{
+  display:flex;
+  justify-content: center;
 }
 
 .Breadcrumbs {
@@ -46,7 +62,6 @@ header {
   height: 85vh;
   background-image: url(../images/Cargo-image3.png);
   color: white;
-  margin-top: -70px;
 }
 
 header .first-heading {
@@ -83,6 +98,10 @@ header .second-heading {
 
 .project-description {
   margin: 20px;
+}
+
+.project-description div{
+  padding: 20px;
 }
 
 .contact-info p > * {

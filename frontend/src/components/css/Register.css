@@ -8,9 +8,6 @@ body, html, div, form, input, label, p {
   body {
     background-color: #fff;
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
   }
   
@@ -19,7 +16,7 @@ body, html, div, form, input, label, p {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 6px;
     width: 300px;
-    margin: 10% auto;
+    margin: auto;
     padding: 20px;
     text-align: center;
     border: 1px solid #ccc;
@@ -27,7 +24,7 @@ body, html, div, form, input, label, p {
   
   h1 {
     color: #333;
-    margin-bottom: 20px;
+    margin: 20px 20px 40px 20px;
   }
   
   form {

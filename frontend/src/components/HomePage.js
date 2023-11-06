@@ -11,10 +11,6 @@ import { mdiFacebook } from '@mdi/js';
 import { mdiPinterest } from '@mdi/js';
 import { mdiLinkedin } from '@mdi/js';
 import { mdiGooglePlus } from '@mdi/js';
-// import Login from './Login';
-import Login from './Login';
-import Register from './Register';
-import AllocateAsset from './AllocateAsset';
 import './css/HomePage.css';
 
 const StyledBreadcrumb = styled(Chip)(({ theme }) => {
@@ -47,9 +43,12 @@ function HomePage() {
               AMI
             </Link>
           </div>
-          <div>
+          <div className='breadcrumb-section'>
             <Breadcrumbs aria-label="breadcrumb">
               <StyledBreadcrumb component={Link} to="/login" label="Login" />
+            </Breadcrumbs>
+            <Breadcrumbs aria-label="breadcrumb">
+              <StyledBreadcrumb component={Link} to="/register" label="Register" />
             </Breadcrumbs>
           </div>
         </div>
@@ -62,29 +61,29 @@ function HomePage() {
       <main className="main">
         <section className="project-description">
           <div className="adding-request">
-            <Icon path={mdiPlusCircle} size={1} />
+            <Icon path={mdiPlusCircle} size={2} />
             <p>Our system enables a user to add assets according to the specific rights they have in the organization</p>
           </div>
           <div className='remove-request'>
-            <Icon path={mdiMinusCircle} size={1} />
+            <Icon path={mdiMinusCircle} size={2} />
             <p>Our system also enables a user to delete an asset according to the rights that the user has in a company</p>
           </div>
           <div className='user-section'>
-            <Icon path={mdiStarCircle} size={1} />
+            <Icon path={mdiStarCircle} size={2} />
             <p>Our System also allows addition of users to the system and removal of users to the system</p>
           </div>
         </section>
-        <section className="">
-
+        <section className="asset-request-section">
+        
         </section>
         <section className="contact-section">
           <div className="contact-info">
             <h2>Say Hi & Get in Touch</h2>
             <p>
-              <Icon path={mdiFacebook} size={1} />
-              <Icon path={mdiPinterest} size={1} />
-              <Icon path={mdiLinkedin} size={1} />
-              <Icon path={mdiGooglePlus} size={1} />
+              <Icon path={mdiFacebook} size={2} />
+              <Icon path={mdiPinterest} size={2} />
+              <Icon path={mdiLinkedin} size={2} />
+              <Icon path={mdiGooglePlus} size={2} />
             </p>
             <div className="contact-section-icons">
               <p></p>

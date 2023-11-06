@@ -1,3 +1,4 @@
+// Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -33,8 +34,23 @@ function Login() {
       if (response.status === 200) {
         const result = await response.json();
         localStorage.setItem('access_token', result.access_token);
+        localStorage.setItem('user_role', result.role);
+
+        switch (result.role) {
+          case 'admin':
+            navigate('/dashboard/admin');
+            break;
+          case 'normalEmployee':
+            navigate('/dashboard/normalEmployee');
+            break;
+          case 'procurementManager':
+            navigate('/dashboard/procurementManager');
+            break;
+          default:
+            break;
+        }
+        
         toast.success('Login successful');
-        navigate('/');
       } else {
         toast.error('Invalid username or password');
       }
@@ -42,7 +58,7 @@ function Login() {
       console.error('Error logging in:', error);
       toast.error('An error occurred during login');
     }
-  };
+  }
 
   const handleLogin = (e) => {
     e.preventDefault();
