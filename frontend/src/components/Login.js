@@ -1,9 +1,8 @@
-// Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import './css/Login.css'; // Import your custom CSS
+import './css/Login.css';
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -38,18 +37,18 @@ function Login() {
 
         switch (result.role) {
           case 'admin':
-            navigate('/dashboard/admin');
+            navigate('/admin');
             break;
           case 'normalEmployee':
-            navigate('/dashboard/normalEmployee');
+            navigate('/normalemployee');
             break;
           case 'procurementManager':
-            navigate('/dashboard/procurementManager');
+            navigate('/procurement');
             break;
           default:
             break;
         }
-        
+
         toast.success('Login successful');
       } else {
         toast.error('Invalid username or password');

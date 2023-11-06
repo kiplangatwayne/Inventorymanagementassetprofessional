@@ -208,16 +208,28 @@ def create_app():
     @jwt_required()
     def add_asset():
         current_user = get_jwt_identity()
-        if current_user.get('role') != 'Procurement Manager':
-            return jsonify({'message': 'Unauthorized. Only Procurement Managers can add assets.'}), 403
+        if current_user.get('role') not in ['Admin', 'Procurement Manager']:
+            return jsonify({'message': 'Unauthorized. Only Admins and Procurement Managers can add assets.'}), 403
+
         data = request.get_json()
         name = data.get('name')
+        description = data.get('description')
         category = data.get('category')
         status = data.get('status')
         image_url = data.get('image_url')
-        new_asset = Asset(name=name, category=category, status=status, image_url=image_url)
+        user_id = data.get('user_id')
+
+        new_asset = Asset(
+            name=name,
+            description=description,
+            category=category,
+            status=status,
+            image_url=image_url,
+            user_id=user_id,
+        )
         db.session.add(new_asset)
         db.session.commit()
+        
         return jsonify({'message': 'Asset added successfully'}), 201
     
   # MVP: Manager Allocates Asset to an Employee (Procurement Manager)
@@ -228,14 +240,18 @@ def create_app():
         current_user = get_jwt_identity()
         if current_user.get('role') != 'Procurement Manager':
             return jsonify({'message': 'Unauthorized. Only Procurement Managers can allocate assets.'}), 403
+
         data = request.get_json()
-        employee_id = data.get('employee_id')
+        employee_name = data.get('employeeName')
+
         asset = Asset.query.get(asset_id)
+
         if not asset:
             return jsonify({'message': 'Asset not found'}), 404
-        asset_allocation = AssetAllocation(asset_id=asset_id, employee_id=employee_id)
-        db.session.add(asset_allocation)
-        db.session.commit() 
+
+        asset.employee_name = employee_name
+        db.session.commit()
+
         return jsonify({'message': 'Asset allocated to employee successfully'}), 201
     
     

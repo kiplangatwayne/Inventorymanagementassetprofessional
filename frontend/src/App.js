@@ -44,13 +44,13 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/UserProfile" element={<UserProfile />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/normalemployee" element={<NormalEmployeeDashboard />} />
+          <Route path="/procurement" element={<ProcurementManagerDashboard />} />
           <Route path="/admin/pending-requests" element={<ManagerPendingRequest />} />
           <Route path="/admin/completed-requests" element={<ManagerCompleteRequest />} />
           <Route path="/admin/allocate-asset" element={<AllocateAsset />} />
           <Route path="/admin/add-asset" element={<AddAsset />} />
-          <Route path="/procurement" element={<ProcurementManagerDashboard />} />
           <Route path="/procurement/approve-asset-request" element={<ApproveAssetRequest />} />
-          <Route path="/normalemployee" element={<NormalEmployeeDashboard />} />
           <Route path="/normalemployee/request-asset" element={<RequestAsset />} />
           <Route path="/normalemployee/active-requests" element={<ActiveRequests />} />
           <Route path="/normalemployee/user-completed-requests" element={<UserCompletedRequests />} />

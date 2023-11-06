@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
@@ -6,21 +6,27 @@ function Dashboard() {
 
   useEffect(() => {
     const userRole = localStorage.getItem('user_role');
-    
+    console.log('userRole:', userRole);
+
     if (!userRole) {
+      console.log('User role not found. Navigating to /login');
       navigate('/login');
     } else {
       switch (userRole) {
         case 'admin':
-          navigate('/dashboard/admin');
+          console.log('Navigating to /admin');
+          navigate('/admin');
           break;
         case 'normalEmployee':
-          navigate('/dashboard/normalemployee');
+          console.log('Navigating to /normalemployee');
+          navigate('/normalemployee');
           break;
         case 'procurementManager':
-          navigate('/dashboard/procurement');
+          console.log('Navigating to /procurement');
+          navigate('/procurement');
           break;
         default:
+          console.log('Unknown user role. Navigating to /login');
           navigate('/login');
       }
     }
