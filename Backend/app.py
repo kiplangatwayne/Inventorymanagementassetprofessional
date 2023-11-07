@@ -1,10 +1,10 @@
-from flask import Flask, request, jsonify, render_template
+from flask import request, jsonify
 from cloudinary.uploader import upload
 import os
 import cloudinary
 from flask_migrate import Migrate
 from models.dbconfig import db
-from config import CloudinaryConfig, SQLAlchemyConfig  # Correct import
+from config import CloudinaryConfig, SQLAlchemyConfig
 from models.asset import Asset
 from models.assetallocation import AssetAllocation
 from models.assetrequest import AssetRequest
@@ -12,8 +12,7 @@ from models. PasswordResetToken import PasswordResetToken
 from models.user import User
 from routes import create_app
 from models.dbconfig import db
-from config import CloudinaryConfig, SQLAlchemyConfig  # Correct import
-
+from config import CloudinaryConfig, SQLAlchemyConfig
 # App initialization
 app = create_app()
 

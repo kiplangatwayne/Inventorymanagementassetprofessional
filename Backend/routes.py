@@ -5,7 +5,7 @@ from config import SQLAlchemyConfig
 from models.user import User
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
-from datetime import timedelta
+from datetime import timedelta, datetime
 import jwt
 
 from models.dbconfig import db
@@ -34,6 +34,10 @@ def create_app():
         password = data.get('password')
         email = data.get('email')
         role = data.get('role')
+        
+        print("Received registration data:")
+        print(data)  # Log the received data
+
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
             return jsonify({'message': 'Username already exists. Please choose another username.'}), 400
@@ -41,9 +45,18 @@ def create_app():
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         new_user = User(username=username, password=hashed_password, email=email, role=role)
         db.session.add(new_user)
-        db.session.commit()
+        
+        try:
+            db.session.commit()  # Commit the changes to the database
 
-        return jsonify({'message': 'User registered successfully'}), 201
+            # Log a message to confirm that the registration was successful
+            print(f"User registered successfully: {new_user.username}")
+
+            return jsonify({'message': 'User registered successfully'}), 201
+        except Exception as e:
+            print(f"Error during registration: {e}")
+            db.session.rollback()  # Rollback the transaction in case of an error
+            return jsonify({'message': 'An error occurred while registering the user'}), 500
 
     # User Login Route
     @app.route('/login', methods=['POST'])
@@ -104,32 +117,109 @@ def create_app():
     @jwt_required()
     def update_data(data_id):
         current_user = get_jwt_identity()
-        if current_user.get('role') not in ['Admin', 'Procurement Manager']:
-            return jsonify({'message': 'Unauthorized. Only Admins and Procurement Managers can update data.'}), 403
-        data = request.get_json()
-        new_name = data.get('name')
-        new_quantity = data.get('quantity')
-        # Update data in the central location (replace this with your database logic)
-        # For example: data = DataModel.query.get(data_id)
-        #  # data.name = new_name
-        # # data.quantity = new_quantity
-        # # db.session.commit()
+        if current_user.get('role') == 'Admin':
+            data = request.get_json()
+            new_name = data.get('name')
+            new_quantity = data.get('quantity')
+
+            # Update data in the central location (replace this with your database logic)
+            data_record = Data.query.get(data_id)
+            if data_record:
+                data_record.name = new_name
+                data_record.quantity = new_quantity
+                db.session.commit()
+                return jsonify({'message': 'Data updated successfully'}), 200
+            else:
+                return jsonify({'message': 'Data not found'}), 404
+        else:
+            return jsonify({'message': 'Unauthorized. Only Admins can update data.'}), 403
         
-        return jsonify({'message': 'Data updated successfully'}), 200
+    # Admin Remove Data
     @app.route('/remove_data/<int:data_id>', methods=['DELETE'])
     @jwt_required()
     def remove_data(data_id):
         current_user = get_jwt_identity()
-        if current_user.get('role') not in ['Admin', 'Procurement Manager']:
-            return jsonify({'message': 'Unauthorized. Only Admins and Procurement Managers can remove data.'}), 403
-        # Remove data from the central location (replace this with your database logic)
-        # # For example: data = DataModel.query.get(data_id)
-        # # db.session.delete(data)
-        # # db.session.commit()
-        # 
-        return jsonify({'message': 'Data removed successfully'}), 200
+        if current_user.get('role') == 'Admin':
+            # Remove data from the central location (replace this with your database logic)
+            data_record = Data.query.get(data_id)
+            if data_record:
+                db.session.delete(data_record)
+                db.session.commit()
+                return jsonify({'message': 'Data removed successfully'}), 200
+            else:
+                return jsonify({'message': 'Data not found'}), 404
+        else:
+            return jsonify({'message': 'Unauthorized. Only Admins can remove data.'}), 403
 
+    # Admin User views
+    @app.route('/admin_view_user_requests', methods=['GET'])
+    @jwt_required()
+    def admin_view_user_requests():
+        current_user = get_jwt_identity()
+        if current_user.get('role') == 'Admin':
+            # Query all user's active and completed requests (replace with your database logic)
+            active_requests = AssetRequest.query.filter_by(approved=False).all()
+            completed_requests = AssetRequest.query.filter_by(approved=True).all()
+            active_requests_list = []
+            completed_requests_list = []
 
+            for request in active_requests:
+                active_requests_list.append({
+                    'id': request.id,
+                    'reason': request.reason,
+                    'quantity': request.quantity,
+                    'urgency': request.urgency
+                })
+
+            for request in completed_requests:
+                completed_requests_list.append({
+                    'id': request.id,
+                    'reason': request.reason,
+                    'quantity': request.quantity,
+                    'urgency': request.urgency
+                })
+
+            return jsonify({
+                'active_requests': active_requests_list,
+                'completed_requests': completed_requests_list
+            }), 200
+        else:
+            return jsonify({'message': 'Unauthorized. Only Admins can view user requests.'}), 403
+
+    # Admin Request Views 
+    @app.route('/admin_view_asset_requests', methods=['GET'])
+    @jwt_required()
+    def admin_view_asset_requests():
+        current_user = get_jwt_identity()
+        if current_user.get('role') == 'Admin':
+            # Query all pending and completed asset requests (replace with your database logic)
+            pending_requests = AssetRequest.query.filter_by(approved=False).all()
+            completed_requests = AssetRequest.query.filter_by(approved=True).all()
+            pending_requests_list = []
+            completed_requests_list = []
+
+            for request in pending_requests:
+                pending_requests_list.append({
+                    'id': request.id,
+                    'reason': request.reason,
+                    'quantity': request.quantity,
+                    'urgency': request.urgency
+                })
+
+            for request in completed_requests:
+                completed_requests_list.append({
+                    'id': request.id,
+                    'reason': request.reason,
+                    'quantity': request.quantity,
+                    'urgency': request.urgency
+                })
+
+            return jsonify({
+                'pending_requests': pending_requests_list,
+                'completed_requests': completed_requests_list
+            }), 200
+        else:
+            return jsonify({'message': 'Unauthorized. Only Admins can view asset requests.'}), 403
 
     # MVP Classify users on whether they are Admin, procurement managers, or normal employees.
 
@@ -155,14 +245,18 @@ def create_app():
     @jwt_required()
     def approve_request(request_id):
         current_user = get_jwt_identity()
+
         if current_user.get('role') != 'Procurement Manager':
             return jsonify({'message': 'Unauthorized. Only Procurement Managers can approve requests.'}), 403
+
         asset_request = AssetRequest.query.get(request_id)
+
         if not asset_request:
             return jsonify({'message': 'Asset request not found'}), 404
+
         asset_request.approved = True
         db.session.commit()
-        
+
         return jsonify({'message': 'Asset request approved successfully'}), 200
     
     # Manager views pending requests with their urgency
@@ -234,28 +328,26 @@ def create_app():
     
   # MVP: Manager Allocates Asset to an Employee (Procurement Manager)
 
-    @app.route('/allocate_asset/<int:asset_id>', methods=['POST'])
+    @app.route('/allocate_asset', methods=['POST'])
     @jwt_required()
-    def allocate_asset(asset_id):
-        current_user = get_jwt_identity()
-        if current_user.get('role') != 'Procurement Manager':
-            return jsonify({'message': 'Unauthorized. Only Procurement Managers can allocate assets.'}), 403
-
+    def allocate_asset():
         data = request.get_json()
-        employee_name = data.get('employeeName')
+        asset_id = data.get('asset_id')
+        user_id = data.get('user_id')
+        allocation_date_str = data.get('allocation_date')
+        deallocation_date_str = data.get('deallocation_date')
 
-        asset = Asset.query.get(asset_id)
+        # Convert date strings to datetime objects
+        allocation_date = datetime.fromisoformat(allocation_date_str)
+        deallocation_date = datetime.fromisoformat(deallocation_date_str) if deallocation_date_str else None
 
-        if not asset:
-            return jsonify({'message': 'Asset not found'}), 404
-
-        asset.employee_name = employee_name
+        asset_allocation = AssetAllocation(asset_id=asset_id, user_id=user_id, allocation_date=allocation_date, deallocation_date=deallocation_date)
+        db.session.add(asset_allocation)
         db.session.commit()
 
         return jsonify({'message': 'Asset allocated to employee successfully'}), 201
-    
-    
-  # MVP: A user can request for new assets or repairs through a form stating the reason and quantity and urgency.
+
+    # MVP: A user can request for new assets or repairs through a form stating the reason and quantity and urgency.
     
     @app.route('/request_asset', methods=['POST'])
     @jwt_required()
