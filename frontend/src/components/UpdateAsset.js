@@ -1,7 +1,8 @@
+// UpdateAsset.js
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class AddAsset extends Component {
+class UpdateAsset extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,9 +11,12 @@ class AddAsset extends Component {
       category: '',
       status: '',
       image_url: '',
-      user_id: '', 
+      user_id: '',
       message: '',
     };
+
+    // Add code to fetch the asset's current data and populate the state
+    // You may want to use a GET request to fetch the asset's data and update the state.
 
     this.handleInputChange = (e) => {
       this.setState({ [e.target.name]: e.target.value });
@@ -20,40 +24,26 @@ class AddAsset extends Component {
 
     this.handleSubmit = (e) => {
       e.preventDefault();
-      const assetData = {
+      const updatedAssetData = {
         name: this.state.name,
         description: this.state.description,
         category: this.state.category,
         status: this.state.status,
         image_url: this.state.image_url,
-        user_id: this.state.user_id, 
+        user_id: this.state.user_id,
       };
 
-      fetch('/add_asset', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
-        },
-        body: JSON.stringify(assetData),
-      })
-        .then((response) => {
-          if (response.status === 201) {
-            this.setState({ message: 'Asset added successfully' });
-          } else {
-            this.setState({ message: 'Failed to add asset' });
-          }
-        })
-        .catch((error) => {
-          console.error('Error adding asset:', error);
-        });
+      // Add code to send a PUT request to update the asset data
+      // Include the asset's ID in the URL to specify which asset to update.
+
+      // Handle the response from the server and set the message state accordingly.
     };
   }
 
   render() {
     return (
       <div>
-        <h1>Add New Asset</h1>
+        <h1>Update Asset</h1>
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
@@ -97,7 +87,7 @@ class AddAsset extends Component {
             value={this.state.user_id}
             onChange={this.handleInputChange}
           />
-          <button type="submit">Add Asset</button>
+          <button type="submit">Update Asset</button>
           {this.state.message && <p>{this.state.message}</p>}
         </form>
         <p>
@@ -108,4 +98,4 @@ class AddAsset extends Component {
   }
 }
 
-export default AddAsset;
+export default UpdateAsset;

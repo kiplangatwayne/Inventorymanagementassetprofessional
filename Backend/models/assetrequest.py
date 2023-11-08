@@ -12,3 +12,4 @@ class AssetRequest(db.Model):
     urgency = db.Column(db.String(20))
     status = db.Column(db.String(20))
     completion_date = db.Column(db.DateTime)
+    approved = db.Column(db.Boolean, default=False) 

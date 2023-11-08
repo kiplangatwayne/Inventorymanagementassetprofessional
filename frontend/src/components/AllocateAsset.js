@@ -4,8 +4,11 @@ class AllocateAsset extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      assetId: '',
-      employeeName: '', // Changed field name to match the backend
+      asset_id: '',
+      user_id: '',
+      allocation_date: '',
+      deallocation_date: '',
+      message: '',
     };
   }
 
@@ -15,24 +18,31 @@ class AllocateAsset extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const { assetId, employeeName } = this.state;
+
+    const { asset_id, user_id, allocation_date, deallocation_date } = this.state;
+    const allocationDate = new Date(allocation_date);
+    const deallocationDate = new Date(deallocation_date);
 
     try {
-      const response = await fetch(`http://127.0.0.1:5000/allocate_asset/{asset_id}${assetId}`, {
+      const response = await fetch(`http://127.0.0.1:5000/allocate_asset`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         },
-        body: JSON.stringify({ Normal_Employee_name: employeeName }),
+        body: JSON.stringify({
+          asset_id,
+          user_id,
+          allocation_date: allocationDate,
+          deallocation_date: deallocationDate,
+        }),
       });
 
-      if (response.ok) {
-        // Successful allocation, you can redirect to a success page or update UI accordingly.
+      if (response.status === 201) {
+        this.setState({ message: 'Asset allocated to employee successfully' });
       } else {
         const data = await response.json();
-        // Handle error response, e.g., display an error message.
-        console.error(data.message);
+        this.setState({ message: data.message });
       }
     } catch (error) {
       console.error('An error occurred:', error);
@@ -46,19 +56,34 @@ class AllocateAsset extends Component {
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
-            name="assetId"
+            name="asset_id"
             placeholder="Asset ID"
-            value={this.state.assetId}
+            value={this.state.asset_id}
             onChange={this.handleInputChange}
           />
           <input
             type="text"
-            name="employeeName"
-            placeholder="Employee Name"
-            value={this.state.employeeName}
+            name="user_id"
+            placeholder="User ID"
+            value={this.state.user_id}
+            onChange={this.handleInputChange}
+          />
+          <input
+            type="datetime-local"
+            name="allocation_date"
+            placeholder="Allocation Date"
+            value={this.state.allocation_date}
+            onChange={this.handleInputChange}
+          />
+          <input
+            type="datetime-local"
+            name="deallocation_date"
+            placeholder="Deallocation Date"
+            value={this.state.deallocation_date}
             onChange={this.handleInputChange}
           />
           <button type="submit">Allocate Asset</button>
+          {this.state.message && <p>{this.state.message}</p>}
         </form>
       </div>
     );

@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AllocateAsset from './components/AllocateAsset';
 import AddAsset from './components/AddAsset';
-import RequestAsset from './components/RequestAsset';
+import RequestAsset from './components/AssetRequest';
 import HomePage from './components/HomePage';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -12,10 +12,14 @@ import ProcurementManagerDashboard from './components/ProcurementManagerDashboar
 import NormalEmployeeDashboard from './components/NormalEmployeeDashboard';
 import UserCompletedRequests from './components/UserCompletedRequests';
 import ActiveRequests from './components/ActiveRequests';
-import ManagerPendingRequest from './components/ManagerPendingRequest';
-import ManagerCompleteRequest from './components/ManagerCompleteRequest';
+import ViewUserRequest from './components/ViewUserRequest';
+import ManagerCompleteRequest from './components/ProcurementManagerCompletedRequest';
 import ApproveAssetRequest from './components/ApproveAssetRequest';
 import Dashboard from './components/Dashboard';
+import AdminDataManagement from './components/AdminDataManagement';
+import UpdateAsset from './components/UpdateAsset';
+import DeleteAsset from './components/DeleteAsset';
+import AddData from './components/AddData';
 
 function App() {
   const userRole = localStorage.getItem('user_role');
@@ -33,10 +37,10 @@ function App() {
             element={
               userRole === 'admin'
                 ? <AdminDashboard />
-                : userRole === 'normalEmployee'
-                ? <NormalEmployeeDashboard />
                 : userRole === 'procurementManager'
                 ? <ProcurementManagerDashboard />
+                : userRole === 'normalEmployee'
+                ? <NormalEmployeeDashboard />
                 : <Dashboard />
             }
           />
@@ -44,16 +48,22 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/UserProfile" element={<UserProfile />} />
           <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/normalemployee" element={<NormalEmployeeDashboard />} />
           <Route path="/procurement" element={<ProcurementManagerDashboard />} />
-          <Route path="/admin/pending-requests" element={<ManagerPendingRequest />} />
+          <Route path="/normalemployee" element={<NormalEmployeeDashboard />} />
+          <Route path="/admin/pending-requests" element={<ViewUserRequest />} />
           <Route path="/admin/completed-requests" element={<ManagerCompleteRequest />} />
           <Route path="/admin/allocate-asset" element={<AllocateAsset />} />
+          <Route path="/procurement/allocate-asset" element={<AllocateAsset />} />
+          <Route path="/procurement/add-data" element={<AddData />} />
+          <Route path="/update-asset/:assetId" component={UpdateAsset} /> 
+          <Route path="/delete-asset/:assetId" component={DeleteAsset} />
           <Route path="/admin/add-asset" element={<AddAsset />} />
+          <Route path="/procurement/add-asset" element={<AddAsset />} />
           <Route path="/procurement/approve-asset-request" element={<ApproveAssetRequest />} />
           <Route path="/normalemployee/request-asset" element={<RequestAsset />} />
           <Route path="/normalemployee/active-requests" element={<ActiveRequests />} />
           <Route path="/normalemployee/user-completed-requests" element={<UserCompletedRequests />} />
+          <Route path="/admin/data-management" element={<AdminDataManagement />} /> 
         </Routes>
       </div>
     </Router>

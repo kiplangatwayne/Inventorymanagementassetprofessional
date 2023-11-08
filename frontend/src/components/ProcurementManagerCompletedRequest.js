@@ -9,7 +9,7 @@ function ManagerCompleteRequest() {
 
   const fetchCompletedRequests = async () => {
     try {
-      const response = await fetch('/api/completed-requests');
+      const response = await fetch('/completed-requests');
       if (response.status === 200) {
         const data = await response.json();
         setCompletedRequests(data);

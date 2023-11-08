@@ -4,7 +4,6 @@ function ApproveAssetRequest() {
   const [assetRequests, setAssetRequests] = useState([]);
 
   useEffect(() => {
-    // Fetch asset requests from an API or other source and populate 'assetRequests'.
     fetchAssetRequests();
   }, []);
 
@@ -24,16 +23,14 @@ function ApproveAssetRequest() {
 
   const handleApproveRequest = async (requestId) => {
     try {
-      // Send a request to the server to approve the request with the given 'requestId'.
-      const response = await fetch(`/api/approve-request/${requestId}`, {
-        method: 'POST',
+      const response = await fetch(`/api/approve_request/${requestId}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
       if (response.status === 200) {
-        // Request approved successfully, update the state or refetch data.
         fetchAssetRequests();
       } else {
         console.error('Failed to approve the request');
@@ -52,7 +49,6 @@ function ApproveAssetRequest() {
             Requested by: {request.user}
             Requested item: {request.item}
             <button onClick={() => handleApproveRequest(request.id)}>Approve</button>
-            {/* Add other request details and approval logic here */}
           </li>
         ))}
       </ul>
