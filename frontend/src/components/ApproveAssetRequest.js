@@ -9,7 +9,7 @@ function ApproveAssetRequest() {
 
   const fetchAssetRequests = async () => {
     try {
-      const response = await fetch('/api/asset-requests');
+      const response = await fetch('/asset-requests');
       if (response.status === 200) {
         const data = await response.json();
         setAssetRequests(data);
@@ -23,7 +23,7 @@ function ApproveAssetRequest() {
 
   const handleApproveRequest = async (requestId) => {
     try {
-      const response = await fetch(`/api/approve_request/${requestId}`, {
+      const response = await fetch(`/approve_request/${requestId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

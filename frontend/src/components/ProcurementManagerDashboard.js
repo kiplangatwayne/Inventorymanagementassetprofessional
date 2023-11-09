@@ -4,6 +4,8 @@ import ApproveAssetRequest from './ApproveAssetRequest';
 import AddData from './AddData';
 import AllocateAsset from './AllocateAsset'; 
 import AddAsset from './AddAsset';
+import ManagerCompletedRequest from './ProcurementManagerCompletedRequest';
+import ManagerPendingRequests from './ProcurementManagerPendingRequest'; 
 
 function ProcurementDashboard() {
   return (
@@ -12,7 +14,7 @@ function ProcurementDashboard() {
       <nav>
         <ul className="nav nav-pills">
           <li className="nav-item">
-            <Link to="approve-asset-request" className="nav-link">
+            <Link to="asset-request" className="nav-link">
               Approve Asset Request
             </Link>
           </li>
@@ -31,13 +33,25 @@ function ProcurementDashboard() {
               Add Asset
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to="completed_request" className="nav-link">
+              Manager Completed Request
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="pending_requests" className="nav-link">
+              Manager Pending Requests
+            </Link>
+          </li>
         </ul>
       </nav>
       <Routes>
         <Route path="add-data" element={<AddData />} />
-        <Route path="approve-asset-request" element={<ApproveAssetRequest />} />
+        <Route path="asset-request" element={<ApproveAssetRequest />} />
         <Route path="allocate-asset" element={<AllocateAsset />} />
-        <Route path="add-asset" element={<AddAsset />} /> 
+        <Route path="add-asset" element={<AddAsset />} />
+        <Route path="completed_request" element={<ManagerCompletedRequest />} />
+        <Route path="pending_requests" element={<ManagerPendingRequests />} /> {}
       </Routes>
     </div>
   );

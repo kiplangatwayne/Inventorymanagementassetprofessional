@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AllocateAsset from './components/AllocateAsset';
 import AddAsset from './components/AddAsset';
-import RequestAsset from './components/AssetRequest';
+import AssetRequest from './components/AssetRequest';
 import HomePage from './components/HomePage';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -14,6 +14,8 @@ import UserCompletedRequests from './components/UserCompletedRequests';
 import ActiveRequests from './components/ActiveRequests';
 import ViewUserRequest from './components/ViewUserRequest';
 import ManagerCompleteRequest from './components/ProcurementManagerCompletedRequest';
+import ManagerPendingRequest from './components/ProcurementManagerPendingRequest';
+
 import ApproveAssetRequest from './components/ApproveAssetRequest';
 import Dashboard from './components/Dashboard';
 import AdminDataManagement from './components/AdminDataManagement';
@@ -31,7 +33,9 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/add_asset" element={<AddAsset />} />
           <Route path="/allocate_asset" element={<AllocateAsset />} />
-          <Route path="/request_asset" element={<RequestAsset />} />
+          <Route path="/asset_request" element={<AssetRequest />} />
+          <Route path="/pending_requests" element={<ManagerCompleteRequest />} />
+          <Route path="/completed_requests" element={<ManagerCompleteRequest />} />
           <Route
             path="/dashboard/*"
             element={
@@ -54,16 +58,18 @@ function App() {
           <Route path="/admin/completed-requests" element={<ManagerCompleteRequest />} />
           <Route path="/admin/allocate-asset" element={<AllocateAsset />} />
           <Route path="/procurement/allocate-asset" element={<AllocateAsset />} />
+          <Route path="/procurement/completed_requests" element={<ManagerCompleteRequest />} />
+          <Route path="/procurement/pending_requests" element={<ManagerPendingRequest />} />
           <Route path="/procurement/add-data" element={<AddData />} />
-          <Route path="/update-asset/:assetId" component={UpdateAsset} /> 
-          <Route path="/delete-asset/:assetId" component={DeleteAsset} />
+          <Route path="/update-asset/:assetId" element={<UpdateAsset />} /> {}
+          <Route path="/delete-asset/:assetId" element={<DeleteAsset />} /> {}
           <Route path="/admin/add-asset" element={<AddAsset />} />
           <Route path="/procurement/add-asset" element={<AddAsset />} />
-          <Route path="/procurement/approve-asset-request" element={<ApproveAssetRequest />} />
-          <Route path="/normalemployee/request-asset" element={<RequestAsset />} />
+          <Route path="/procurement/asset-request" element={<ApproveAssetRequest />} />
+          <Route path="/normalemployee/Asset_Request" element={<AssetRequest />} />
           <Route path="/normalemployee/active-requests" element={<ActiveRequests />} />
           <Route path="/normalemployee/user-completed-requests" element={<UserCompletedRequests />} />
-          <Route path="/admin/data-management" element={<AdminDataManagement />} /> 
+          <Route path="/admin/data-management" element={<AdminDataManagement />} />
         </Routes>
       </div>
     </Router>
