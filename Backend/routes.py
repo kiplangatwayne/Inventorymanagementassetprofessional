@@ -125,9 +125,11 @@ def create_app():
         if data_record:
             db.session.delete(data_record)
             db.session.commit()
-            return jsonify({'message': 'Data removed successfully'}), 200
+            return jsonify({'message': 'Asset removed successfully'}), 200
         else:
-            return jsonify({'message': 'Data not found'}), 404
+            return jsonify({'message': 'Asset not found'}), 404
+
+
 
     @app.route('/get_all_assets', methods=['GET'])
     @jwt_required()
@@ -292,7 +294,7 @@ def create_app():
         category = data.get('category')
         status = data.get('status')
         image_url = data.get('image_url')
-        user_id = data.get('user_id')
+        username = data.get('username')
 
         new_asset = Asset(
             name=name,
@@ -300,26 +302,57 @@ def create_app():
             category=category,
             status=status,
             image_url=image_url,
-            user_id=user_id,
+            username=username,
         )
         db.session.add(new_asset)
         db.session.commit()
 
         return jsonify({'message': 'Asset added successfully'}), 201
 
+    @app.route('/update_asset/<int:asset_id>', methods=['PUT'])
+    @jwt_required()
+    def update_asset(asset_id):
+        asset = Asset.query.get(asset_id)
+
+        if not asset:
+            return jsonify({'message': 'Asset not found'}), 404
+
+        data = request.get_json()
+        
+        if 'name' in data:
+            asset.name = data['name']
+        if 'description' in data:
+            asset.description = data['description']
+        if 'category' in data:
+            asset.category = data['category']
+        if 'status' in data:
+            asset.status = data['status']
+        if 'image_url' in data:
+            asset.image_url = data['image_url']
+        if 'user_id' in data:
+            asset.user_id = data['user_id']
+
+        try:
+            db.session.commit()
+            return jsonify({'message': 'Asset updated successfully'}), 200
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'message': 'Failed to update asset. Please check your data.'}), 500
+
+
     @app.route('/allocate_asset', methods=['POST'])
     @jwt_required()
     def allocate_asset():
         data = request.get_json()
-        asset_id = data.get('asset_id')
-        user_id = data.get('user_id')
+        asset_name = data.get('asset_name')
+        username = data.get('username')
         allocation_date_str = data.get('allocation_date')
         deallocation_date_str = data.get('deallocation_date')
 
         allocation_date = datetime.fromisoformat(allocation_date_str)
         deallocation_date = datetime.fromisoformat(deallocation_date_str) if deallocation_date_str else None
 
-        asset_allocation = AssetAllocation(asset_id=asset_id, user_id=user_id, allocation_date=allocation_date, deallocation_date=deallocation_date)
+        asset_allocation = AssetAllocation(asset_name=asset_name, username=username, allocation_date=allocation_date, deallocation_date=deallocation_date)
         db.session.add(asset_allocation)
         db.session.commit()
 

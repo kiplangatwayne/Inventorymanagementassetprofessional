@@ -11,6 +11,7 @@ fake = Faker()
 
 # C application context
 app.app_context().push()
+
 # Create fake users
 def create_fake_users(count=10):
     users = []
@@ -42,7 +43,7 @@ def create_real_assets(count=20):
             category=category,
             image_url=fake.image_url(),
             status=fake.random_element(elements=('In Use', 'Available', 'Repaired')),
-            user_id=fake.random_element(User.query.all()).id
+            username=fake.random_element(User.query.all()).username
         )
         assets.append(asset)
     db.session.add_all(assets)
@@ -53,8 +54,8 @@ def create_fake_asset_allocations(count=30):
     allocations = []
     for _ in range(count):
         allocation = AssetAllocation(
-            asset_id=fake.random_element(Asset.query.all()).id,
-            user_id=fake.random_element(User.query.all()).id,
+            asset_name=fake.random_element(Asset.query.all()).name,
+            username=fake.random_element(User.query.all()).username,
             allocation_date=fake.date_time_this_decade(),
             deallocation_date=fake.date_time_this_decade()
         )
@@ -67,8 +68,8 @@ def create_fake_asset_requests(count=50):
     requests = []
     for _ in range(count):
         request = AssetRequest(
-            requester_id=fake.random_element(User.query.all()).id,
-            asset_id=fake.random_element(Asset.query.all()).id,
+            requester_name=fake.random_element(User.query.all()).username,
+            asset_name=fake.random_element(Asset.query.all()).name,
             quantity=fake.random_int(min=1, max=10),
             reason=fake.text(),
             urgency=fake.random_element(elements=('High', 'Medium', 'Low')),
@@ -95,7 +96,7 @@ def create_fake_password_reset_tokens(count=10):
 if __name__ == "__main__":
     db.create_all()
     create_fake_users()
-    create_real_assets()  # Call the modified function for real assets
+    create_real_assets()
     create_fake_asset_allocations()
     create_fake_asset_requests()
     create_fake_password_reset_tokens()
