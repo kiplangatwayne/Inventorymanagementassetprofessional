@@ -52,9 +52,9 @@ function App() {
           <Route path="/procurement/add-asset" element={<AddAsset />} />
           <Route path="/procurement/approve-asset-request" element={<ApproveAssetRequest />} />
           <Route path="/procurement/pending-requests" element={<ViewUserRequest />} />
-          <Route path="/normalemployee/request-asset" element={<RequestAsset />} />
-          <Route path="/normalemployee/active-requests" element={<ActiveRequests />} />
-          <Route path="/normalemployee/user-completed-requests" element={<UserCompletedRequests />} />
+          <Route path="/request-asset" element={<RequestAsset />} />
+          <Route path="/active-requests" element={<ActiveRequests />} />
+          <Route path="/user-completed-requests" element={<UserCompletedRequests />} />
           <Route path="/admin/data-management" element={<AdminDataManagement />} />
         </Routes>
       </div>

@@ -433,40 +433,7 @@ def create_app():
             })
         return jsonify({'active_requests': active_requests_list, 'completed_requests': completed_requests_list}), 200
 
-    @app.route('/request_asset', methods=['POST'])
-    @jwt_required()
-    def request_asset():
-        try:
-            current_user = get_jwt_identity()
-            print(f"JWT Payload: {current_user}")  
-
-            allowed_roles = ['Normal Employee', 'normalEmployee']  
-            if current_user.get('role') not in allowed_roles:
-                return jsonify({'message': 'Unauthorized. Only Normal Employees can request assets.'}), 403
-
-            data = request.get_json()
-
-            asset_id = data.get('asset_id')
-            reason = data.get('reason')
-            quantity = data.get('quantity')
-            urgency = data.get('urgency')
-
-            asset_request = AssetRequest(
-                requester_id=current_user.get('user_id'),
-                asset_id=asset_id,
-                reason=reason,
-                quantity=quantity,
-                urgency=urgency,
-            )
-
-            db.session.add(asset_request)
-            db.session.commit()
-
-            return jsonify({'message': 'Asset request submitted successfully'}), 200
-
-        except Exception as e:
-            print(e)  
-            return jsonify({'message': 'Internal Server Error'}), 500
+    
     
     return app
 

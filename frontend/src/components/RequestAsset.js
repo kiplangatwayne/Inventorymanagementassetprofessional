@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 
-class AssetRequest extends Component {
+class RequestAsset extends Component {
   constructor(props) {
     super(props);
     this.state = {
       requestReason: '',
       requestQuantity: '',
       requestUrgency: '',
+      asset_name: '', // Updated to match the model field name
       error: null,
     };
   }
@@ -18,7 +19,6 @@ class AssetRequest extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-   
     const token = localStorage.getItem('access_token');
     console.log('Token:', token);
 
@@ -28,6 +28,7 @@ class AssetRequest extends Component {
     }
 
     const requestData = {
+      asset_name: this.state.asset_name,
       reason: this.state.requestReason,
       quantity: this.state.requestQuantity,
       urgency: this.state.requestUrgency,
@@ -35,7 +36,7 @@ class AssetRequest extends Component {
 
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5OTUzNDY4OCwianRpIjoiOGFkMGRjZjItN2I4My00MDQ1LWEyMTgtZmM2OThmNDg2ZDU5IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJ1c2VyX2lkIjoxNCwicm9sZSI6Ik5vcm1hbCBVc2VyIn0sIm5iZiI6MTY5OTUzNDY4OCwiZXhwIjoxNjk5NjIxMDg4fQ.5IZGCLkO1uHv9BRsaayqF4DA5XZcnj_KF8BkiPI7zBI`,
+      'Authorization': `YourAuthTokenHere`,
     };
 
     const apiEndpoint = 'http://127.0.0.1:5000/request_asset';
@@ -47,7 +48,7 @@ class AssetRequest extends Component {
     })
       .then(response => {
         if (!response.ok) {
-          throw new Error('Failed to submit request. Please check the data and try again.');
+          throw  Error('Failed to submit request. Please check the data and try again.');
         }
         return response.json();
       })
@@ -64,12 +65,19 @@ class AssetRequest extends Component {
   };
 
   render() {
-    const { requestReason, requestQuantity, requestUrgency, error } = this.state;
+    const { requestReason, requestQuantity, requestUrgency, asset_name, error } = this.state;
 
     return (
       <div>
         <h1>Request Asset</h1>
         <form onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            name="asset_name" 
+            placeholder="Asset Name"
+            value={asset_name} 
+            onChange={this.handleInputChange}
+          />
           <input
             type="text"
             name="requestReason"
@@ -99,4 +107,4 @@ class AssetRequest extends Component {
   }
 }
 
-export default AssetRequest;
+export default RequestAsset;
