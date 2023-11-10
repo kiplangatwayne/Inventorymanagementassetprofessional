@@ -1,56 +1,63 @@
 import React from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Outlet, Route, Routes, useNavigate } from 'react-router-dom';
+import AdminDashboardLayout from './AdminDashboardLayout';
 import AddAsset from './AddAsset';
-import UpdateAsset from './UpdateAsset';
-import DeleteAsset from './DeleteAsset';
+import ModifyAsset from './ModifyAsset';
 import AllocateAsset from './AllocateAsset';
-import ManagerCompleteRequest from './ProcurementManagerCompletedRequest';
-import AdminDataManagement from './AdminDataManagement'; 
-import ViewUserRequests from './ViewUserRequest'
+import ViewUserRequest from './ViewUserRequest';
 
 function AdminDashboard() {
-  return (
+  const navigate = useNavigate();
+
+  const handleNavLinkClick = (path, event) => {
+    event.preventDefault();
+    console.log('Navigating to:', path);
+    navigate(path);
+  };
+
+  const leftMenu = (
     <div>
       <h1>Admin Dashboard</h1>
-      <nav>
-        <ul className="nav nav-pills">
-          <li className="nav-item">
-            <Link to="add-asset" className="nav-link">Add Asset</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="delete-asset" className="nav-link">Delete Asset</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="update-asset" className="nav-link">Update Asset</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="allocate-asset" className="nav-link">Allocate Asset</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="pending-requests" className="nav-link">View Pending Requests</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="completed-requests" className="nav-link">View Completed Requests</Link>
-          </li>
-        </ul>
-      </nav>
-      <Routes>
-        <Route path="add-asset" element={<AddAsset />} />
-        <Route
-          path="update-asset/:assetId"
-          element={<UpdateAsset />}
-        />
-        <Route
-          path="delete-asset/:assetId"
-          element={<DeleteAsset />}
-        />
-        <Route path="allocate-asset" element={<AllocateAsset />} />
-        <Route path="pending-requests" element={<ViewUserRequests />} />
-        <Route path="completed-requests" element={<ManagerCompleteRequest />} />
-        <Route path="data-management" element={<AdminDataManagement />} /> 
-      </Routes>
+      <ul className="nav nav-pills flex-column">
+        <li className="nav-item">
+          <Link to="/admin/add-asset" className="nav-link" onClick={(event) => handleNavLinkClick('/admin/add-asset', event)}>
+            Add Asset
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/admin/modify-asset" className="nav-link" onClick={(event) => handleNavLinkClick('/admin/modify-asset', event)}>
+            Modify Asset
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/admin/allocate-asset" className="nav-link" onClick={(event) => handleNavLinkClick('/admin/allocate-asset', event)}>
+            Allocate Asset
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/admin/pending-requests" className="nav-link" onClick={(event) => handleNavLinkClick('/admin/pending-requests', event)}>
+            View Pending Requests
+          </Link>
+        </li>
+      </ul>
     </div>
   );
+
+  return (
+    <AdminDashboardLayout left={leftMenu} right={<Outlet />}>
+      <Routes>
+        <Route path="/" element={<DefaultContent />} />
+        <Route path="add-asset" element={<AddAsset />} />
+        <Route path="modify-asset" element={<ModifyAsset />} />
+        <Route path="allocate-asset" element={<AllocateAsset />} />
+        <Route path="pending-request" element={<ViewUserRequest />} />
+      </Routes>
+    </AdminDashboardLayout>
+  );
+}
+
+function DefaultContent() {
+  return <div>Welcome to the Admin Dashboard! Select a section from the left menu.</div>;
 }
 
 export default AdminDashboard;

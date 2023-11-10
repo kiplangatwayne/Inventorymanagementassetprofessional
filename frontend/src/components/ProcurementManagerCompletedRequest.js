@@ -29,7 +29,6 @@ function ManagerCompleteRequest() {
           <li key={request.id}>
             Requested by: {request.user}
             Requested item: {request.item}
-            {/* Display other request details here */}
           </li>
         ))}
       </ul>

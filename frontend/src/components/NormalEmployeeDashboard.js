@@ -3,6 +3,7 @@ import { Link, Route, Routes } from 'react-router-dom';
 import RequestAsset from './AssetRequest';
 import ActiveRequests from './ActiveRequests';
 import UserCompletedRequests from './UserCompletedRequests';
+import './css/NormalEmployeeDashboard.css'
 
 function NormalEmployeeDashboard() {
   return (

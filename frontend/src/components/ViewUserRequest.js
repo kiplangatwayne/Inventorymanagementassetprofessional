@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import './css/ViewUserRequest.css';
 
 class ViewUserRequests extends Component {
   constructor(props) {
@@ -30,68 +32,73 @@ class ViewUserRequests extends Component {
 
   render() {
     return (
-      <div>
-        <h1>User Requests</h1>
+      <div className="view-user-requests">
+        <h1 className="main-title">User Requests</h1>
 
-        <h2>Active Requests</h2>
-        {this.state.activeRequests.length > 0 ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Reason</th>
-                <th>Quantity</th>
-                <th>Urgency</th>
-                <th>Status</th>
-                <th>Completion Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.activeRequests.map((request, index) => (
-                <tr key={index}>
-                  <td>{request.reason}</td>
-                  <td>{request.quantity}</td>
-                  <td>{request.urgency}</td>
-                  <td>{request.status}</td>
-                  <td>{request.completion_date}</td>
+        <div className="request-type">
+          <h2>Active Requests</h2>
+          {this.state.activeRequests.length > 0 ? (
+            <table className="requests-table">
+              <thead>
+                <tr>
+                  <th>Reason</th>
+                  <th>Quantity</th>
+                  <th>Urgency</th>
+                  <th>Status</th>
+                  <th>Completion Date</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <div>No active requests found.</div>
-        )}
+              </thead>
+              <tbody>
+                {this.state.activeRequests.map((request, index) => (
+                  <tr key={index}>
+                    <td>{request.reason}</td>
+                    <td>{request.quantity}</td>
+                    <td>{request.urgency}</td>
+                    <td>{request.status}</td>
+                    <td>{request.completion_date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="no-requests">No active requests found.</div>
+          )}
+        </div>
 
-        <h2>Completed Requests</h2>
-        {this.state.completedRequests.length > 0 ? (
-          <table>
-            <thead>
-              <tr>
-                <th>Reason</th>
-                <th>Quantity</th>
-                <th>Urgency</th>
-                <th>Status</th>
-                <th>Completion Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.completedRequests.map((request, index) => (
-                <tr key={index}>
-                  <td>{request.reason}</td>
-                  <td>{request.quantity}</td>
-                  <td>{request.urgency}</td>
-                  <td>{request.status}</td>
-                  <td>{request.completion_date}</td>
+        <div className="request-type">
+          <h2>Completed Requests</h2>
+          {this.state.completedRequests.length > 0 ? (
+            <table className="requests-table">
+              <thead>
+                <tr>
+                  <th>Reason</th>
+                  <th>Quantity</th>
+                  <th>Urgency</th>
+                  <th>Status</th>
+                  <th>Completion Date</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <div>No completed requests found.</div>
-        )}
+              </thead>
+              <tbody>
+                {this.state.completedRequests.map((request, index) => (
+                  <tr key={index}>
+                    <td>{request.reason}</td>
+                    <td>{request.quantity}</td>
+                    <td>{request.urgency}</td>
+                    <td>{request.status}</td>
+                    <td>{request.completion_date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="no-requests">No completed requests found.</div>
+          )}
+        </div>
 
         {this.state.activeRequests.length === 0 && this.state.completedRequests.length === 0 && (
-          <div>No requests found.</div>
+          <div className="no-requests">No requests found.</div>
         )}
+        <Link to="/admin" className="go-back-link">Go back to the admin dashboard</Link>
       </div>
     );
   }

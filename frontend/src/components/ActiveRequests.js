@@ -1,60 +1,62 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
-class ActiveRequests extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      requests: [], // Initialize with an empty array of requests
-    };
-  }
+const ActiveRequests = () => {
+  const [activeRequests, setActiveRequests] = useState([]);
 
-  // Function to delete a request
-  handleDeleteRequest = (requestId) => {
-    // You can implement the logic to delete a request by its ID here
-    // For example:
-    const updatedRequests = this.state.requests.filter(request => request.id !== requestId);
-    this.setState({ requests: updatedRequests });
+  useEffect(() => {
+    fetchActiveRequests();
+  }, []);
+
+  const fetchActiveRequests = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/active_requests', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setActiveRequests(data.active_requests);
+    } catch (error) {
+      console.error('Error fetching active requests:', error.message);
+    }
   };
 
-  // Function to edit a request
-  handleEditRequest = (requestId) => {
-    // You can implement the logic to edit a request by its ID here
-    // For example, you can open a modal or navigate to an edit page.
-  };
-
-  render() {
-    return (
-      <div>
-        <h1>Active Requests</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Asset Name</th>
-              <th>Reason</th>
-              <th>Quantity</th>
-              <th>Urgency</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.requests.map((request) => (
-              <tr key={request.id}>
-                <td>{request.name}</td>
-                <td>{request.reason}</td>
-                <td>{request.quantity}</td>
-                <td>{request.urgency}</td>
-                <td>
-                  <button onClick={() => this.handleEditRequest(request.id)}>Edit</button>
-                  <button onClick={() => this.handleDeleteRequest(request.id)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <h2>Active Requests</h2>
+      {activeRequests.length > 0 ? (
+        activeRequests.map((request) => (
+          <div key={request.id} className="request-container">
+            <h3>Request ID: {request.id}</h3>
+            <table className="request-table">
+              <tbody>
+                <tr>
+                  <td className="field">Reason:</td>
+                  <td className="value">{request.reason}</td>
+                </tr>
+                <tr>
+                  <td className="field">Quantity:</td>
+                  <td className="value">{request.quantity}</td>
+                </tr>
+                <tr>
+                  <td className="field">Urgency:</td>
+                  <td className="value">{request.urgency}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        ))
+      ) : (
+        <p>No active requests available.</p>
+      )}
+    </div>
+  );
+};
 
 export default ActiveRequests;

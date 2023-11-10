@@ -4,8 +4,13 @@ import ApproveAssetRequest from './ApproveAssetRequest';
 import AddData from './AddData';
 import AllocateAsset from './AllocateAsset'; 
 import AddAsset from './AddAsset';
+import ViewUserRequest from './ViewUserRequest';
+import UserCompletedRequests from './UserCompletedRequests';
 
 function ProcurementDashboard() {
+  const handleNavLinkClick = (link, event) => {
+  };
+
   return (
     <div>
       <h1>Procurement Dashboard</h1>
@@ -31,6 +36,16 @@ function ProcurementDashboard() {
               Add Asset
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to="completed-request" className="nav-link">
+              Manager Completed Request
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/admin/pending-requests" className="nav-link" onClick={(event) => handleNavLinkClick('/admin/pending-requests', event)}>
+              View Pending Requests
+            </Link>
+          </li>
         </ul>
       </nav>
       <Routes>
@@ -38,6 +53,8 @@ function ProcurementDashboard() {
         <Route path="approve-asset-request" element={<ApproveAssetRequest />} />
         <Route path="allocate-asset" element={<AllocateAsset />} />
         <Route path="add-asset" element={<AddAsset />} /> 
+        <Route path="completed-request" element={<UserCompletedRequests />} /> 
+        <Route path="pending-request" element={<ViewUserRequest />} />
       </Routes>
     </div>
   );

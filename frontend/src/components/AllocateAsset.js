@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import './css/AllocateAsset.css'
 
 class AllocateAsset extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      asset_id: '',
-      user_id: '',
+      asset_name: '',
+      username: '',
       allocation_date: '',
       deallocation_date: '',
       message: '',
@@ -19,7 +21,7 @@ class AllocateAsset extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { asset_id, user_id, allocation_date, deallocation_date } = this.state;
+    const { asset_name, username, allocation_date, deallocation_date } = this.state;
     const allocationDate = new Date(allocation_date);
     const deallocationDate = new Date(deallocation_date);
 
@@ -31,8 +33,8 @@ class AllocateAsset extends Component {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         },
         body: JSON.stringify({
-          asset_id,
-          user_id,
+          asset_name,
+          username,
           allocation_date: allocationDate,
           deallocation_date: deallocationDate,
         }),
@@ -51,22 +53,24 @@ class AllocateAsset extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Allocate Asset</h1>
+      <div className="allocate-asset-container">
+        <h1 className="header-title">Allocate Asset</h1>
         <form onSubmit={this.handleSubmit}>
           <input
             type="text"
-            name="asset_id"
-            placeholder="Asset ID"
-            value={this.state.asset_id}
+            name="asset_name"
+            placeholder="Asset Name"
+            value={this.state.asset_name}
             onChange={this.handleInputChange}
+            className="asset-name"
           />
           <input
             type="text"
-            name="user_id"
-            placeholder="User ID"
-            value={this.state.user_id}
+            name="username" 
+            placeholder="Username"
+            value={this.state.username}
             onChange={this.handleInputChange}
+            className="username"
           />
           <input
             type="datetime-local"
@@ -74,6 +78,7 @@ class AllocateAsset extends Component {
             placeholder="Allocation Date"
             value={this.state.allocation_date}
             onChange={this.handleInputChange}
+            className="allocation-date"
           />
           <input
             type="datetime-local"
@@ -81,10 +86,16 @@ class AllocateAsset extends Component {
             placeholder="Deallocation Date"
             value={this.state.deallocation_date}
             onChange={this.handleInputChange}
+            className="deallocation-date"
           />
-          <button type="submit">Allocate Asset</button>
-          {this.state.message && <p>{this.state.message}</p>}
+          <button type="submit" className="allocate-button">Allocate Asset</button>
+          {this.state.message && <p className="message">{this.state.message}</p>}
         </form>
+        <p>
+          <Link to="/admin" className="go-back-link">
+            Go back to the admin dashboard
+          </Link>
+        </p>
       </div>
     );
   }

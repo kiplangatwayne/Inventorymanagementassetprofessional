@@ -10,8 +10,6 @@ class UserClassification extends Component {
   }
 
   componentDidMount() {
-    // Perform an AJAX request to get user classification
-    // You can use fetch or a library like Axios
     fetch('/classify', {
       method: 'GET',
       headers: {
@@ -26,7 +24,6 @@ class UserClassification extends Component {
       })
       .catch((error) => {
         console.error('Error getting user classification:', error);
-        // Handle the error, e.g., show an error message to the user
       });
   }
 

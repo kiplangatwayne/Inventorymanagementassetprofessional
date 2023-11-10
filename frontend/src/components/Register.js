@@ -74,13 +74,16 @@ function Register() {
           />
         </div>
         <div className="form-group">
-          <input
-            type="text"
+          <label htmlFor="role">Role</label>
+          <select
             name="role"
-            placeholder="Role"
             value={formData.role}
             onChange={handleChange}
-          />
+          >
+            <option value="Admin">Admin</option>
+            <option value="Procurement Manager">Procurement Manager</option>
+            <option value="Normal Employee">Normal Employee</option>
+          </select>
         </div>
         <button type="submit">Submit</button>
       </form>
