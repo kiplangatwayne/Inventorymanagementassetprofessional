@@ -4,10 +4,10 @@ class RequestAsset extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      asset_name: '',
       requestReason: '',
       requestQuantity: '',
       requestUrgency: '',
-      asset_name: '', // Updated to match the model field name
       error: null,
     };
   }
